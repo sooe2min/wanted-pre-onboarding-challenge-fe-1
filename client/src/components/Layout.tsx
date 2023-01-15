@@ -1,20 +1,9 @@
-import { useEffect } from 'react'
 import { Button, Container, Navbar } from 'react-bootstrap'
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
-import useAuth from '../Hooks/useAuth'
+import { useNavigate } from 'react-router-dom'
+import { ACCESS_TOKEN_KEY } from '../constants/token.constant'
 
 function Layout() {
-	const auth = useAuth()
 	const navigate = useNavigate()
-	const { pathname } = useLocation()
-
-	useEffect(() => {
-		if (!auth.token && pathname !== '/login') {
-			window.alert('토큰이 유효하지 않습니다. 로그인을 해주세요.')
-
-			navigate('/login')
-		}
-	}, [auth.token])
 
 	return (
 		<div className="col-md-5 mx-auto">
@@ -27,17 +16,15 @@ function Layout() {
 						<Button
 							variant="primary"
 							onClick={() => {
-								window.localStorage.removeItem('token')
+								window.localStorage.removeItem(ACCESS_TOKEN_KEY)
 
-								auth.signout(() => navigate('/login'))
+								navigate('/login')
 							}}>
 							로그아웃
 						</Button>
 					</Navbar.Collapse>
 				</Container>
 			</Navbar>
-
-			<Outlet />
 		</div>
 	)
 }

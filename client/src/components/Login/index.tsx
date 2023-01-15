@@ -1,25 +1,14 @@
 import { useState } from 'react'
 import { Button, Form, Stack } from 'react-bootstrap'
-import { useMutation } from 'react-query'
 import { useNavigate } from 'react-router-dom'
-import authRequest from '../api/authRequest'
-import useAuth from '../Hooks/useAuth'
+import usersMutation from '../../hooks/mutation/useUserMutations'
 
-function SignupPage() {
-	const auth = useAuth()
+function Login() {
 	const navigate = useNavigate()
-
 	const [validated, setValidated] = useState(false)
 	const [formData, setFormData] = useState({
 		email: '',
 		password: ''
-	})
-
-	const mutation = useMutation({
-		mutationFn: authRequest.signup,
-		onSuccess: () => {
-			navigate('/login')
-		}
 	})
 
 	const handleChange = (event: any) => {
@@ -41,11 +30,9 @@ function SignupPage() {
 		event.preventDefault()
 		event.stopPropagation()
 
-		auth.signup(() => {
-			mutation.mutate({
-				email: formData.email,
-				password: formData.password
-			})
+		usersMutation().signIn.mutate({
+			email: formData.email,
+			password: formData.password
 		})
 
 		setFormData({ email: '', password: '' })
@@ -69,7 +56,7 @@ function SignupPage() {
 						이메일 조건: 최소 @, . 포함
 					</Form.Control.Feedback>
 					<Form.Control.Feedback type="valid">
-						Looks good!
+						Looks good!!
 					</Form.Control.Feedback>
 				</Form.Group>
 
@@ -87,18 +74,24 @@ function SignupPage() {
 						비밀번호 조건 : 8자 이상 입력
 					</Form.Control.Feedback>
 					<Form.Control.Feedback type="valid">
-						Looks good!
+						Looks good!!
 					</Form.Control.Feedback>
 				</Form.Group>
 
 				<Stack>
 					<Button variant="primary" type="submit" disabled={!validated}>
-						회원가입
+						로그인
 					</Button>
 				</Stack>
 			</Form>
+
+			<Stack className="mt-3">
+				<Button variant="primary" onClick={() => navigate('/signup')}>
+					회원가입
+				</Button>
+			</Stack>
 		</div>
 	)
 }
 
-export default SignupPage
+export default Login
