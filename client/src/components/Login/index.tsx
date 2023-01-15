@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Button, Form, Stack } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import usersMutation from '../../hooks/mutation/useUserMutations'
+import useUserMutations from '../../hooks/mutation/useUserMutations'
 
 function Login() {
 	const navigate = useNavigate()
@@ -30,7 +30,7 @@ function Login() {
 		event.preventDefault()
 		event.stopPropagation()
 
-		usersMutation().signIn.mutate({
+		useUserMutations().signIn.mutate({
 			email: formData.email,
 			password: formData.password
 		})

@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Button, Container, Form, ListGroup } from 'react-bootstrap'
 import { useQuery } from 'react-query'
-import todosMutation from '../../hooks/mutation/todoMutations'
-import todosQuery from '../../hooks/query/todoQueries'
+import useTodoMutations from '../../hooks/mutation/useTodoMutations'
+import useTodoQueries from '../../hooks/query/useTodoQueries'
 
 function Todo() {
 	const [formData, setFormData] = useState({
@@ -11,9 +11,9 @@ function Todo() {
 	})
 	const [isModify, setIsModify] = useState(false)
 
-	const { getTodos } = todosQuery()
+	const { getTodos } = useTodoQueries()
 	const { isLoading, data } = useQuery(getTodos)
-	const { createTodo, deleteTodo, updateTodo } = todosMutation()
+	const { createTodo, deleteTodo, updateTodo } = useTodoMutations()
 
 	const handleChange = (event: any) => {
 		const { name, value } = event.target

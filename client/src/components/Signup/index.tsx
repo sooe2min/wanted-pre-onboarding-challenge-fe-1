@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Button, Form, Stack } from 'react-bootstrap'
-import usersMutations from '../../hooks/mutation/useUserMutations'
+import useUserMutations from '../../hooks/mutation/useUserMutations'
 
 function Signup() {
 	const [validated, setValidated] = useState(false)
@@ -28,7 +28,7 @@ function Signup() {
 		event.preventDefault()
 		event.stopPropagation()
 
-		usersMutations().signUp.mutate({
+		useUserMutations().signUp.mutate({
 			email: formData.email,
 			password: formData.password
 		})
